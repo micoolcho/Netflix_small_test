@@ -1,0 +1,15 @@
+#!/bin/bash
+for file in `ls`
+do 
+  if test "$file" != 'combine'; then 
+    m=`echo $file | sed -e 's/mv_//' | sed -e 's/.txt//'`
+    cat $file | sed -e "s/^/${m},/"
+  fi 
+done > ../ds
+cd ..
+# grep -v "combine," ds > ds_clean
+# grep -v ":" ds_clean > ds_clean2
+grep -v ":" ds > ds_clean
+cat ds_clean | gshuf > shuffed_ds
+head -n 90432456 shuffed_ds > tr
+tail -n 10048051 shuffed_ds > ts
