@@ -19,14 +19,6 @@ Movies = training_dataset[:,0]
 Users = training_dataset[:,1]
 Ratings = training_dataset[:,2]
 
-L = len(training_dataset)
-
-testing_dataframe = pandas.read_csv("ts.csv", header=None)
-testing_dataset = testing_dataframe.values
-
-X_test = testing_dataset[:,0:2]
-Y_test = testing_dataset[:,2]
-
 numUsers = len(numpy.unique(Users))
 numMovies = len(numpy.unique(Movies))
 print("No of unique users: " + str(numUsers))
