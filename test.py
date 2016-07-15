@@ -39,9 +39,7 @@ model.add(Dense(1, activation='sigmoid'))
 model.compile(loss='mse', optimizer='adamax', metrics=['accuracy'])
 print(model.summary())
 
-callbacks = []
-# callbacks = [EarlyStopping('val_loss', patience=2), ModelCheckpoint('movie_weights.h5', save_best_only=True)]
-model.fit([Users.reshape((-1,1)), Movies.reshape((-1,1))], Ratings.reshape((-1,1)), batch_size=100, nb_epoch=20, validation_split=.1, callbacks=callbacks, verbose=2)
+model.fit([Users.reshape((-1,1)), Movies.reshape((-1,1))], Ratings.reshape((-1,1)), batch_size=100, nb_epoch=20, validation_split=.1, verbose=2)
 
 scores = model.evaluate(X_test, Y_test, verbose=0)
 print("Accuracy: %.2f%%" % (scores[1]*100))
