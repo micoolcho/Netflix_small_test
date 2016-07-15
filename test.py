@@ -15,9 +15,9 @@ numpy.random.seed(seed)
 training_dataframe = pandas.read_csv("tr.csv", header=None)
 training_dataset = training_dataframe.values
 
-Movies = numpy.array(training_dataset[:,0])
-Users = numpy.array(training_dataset[:,1])
-Ratings = numpy.array(training_dataset[:,2])
+Movies = training_dataset[:,0]
+Users = training_dataset[:,1]
+Ratings = training_dataset[:,2]
 
 L = len(training_dataset)
 
@@ -43,14 +43,13 @@ model_movie.add(Reshape(target_shape=(30,)))
 model = Sequential()
 model.add(Merge([model_user, model_movie], mode='concat'))
 model.add(Dense(64, activation='relu', init='uniform'))
-model.add(Dense(64, activation='relu', init='uniform'))
 model.add(Dense(1, activation='sigmoid'))
 model.compile(loss='mse', optimizer='adamax', metrics=['accuracy'])
 print(model.summary())
 
 callbacks = []
 # callbacks = [EarlyStopping('val_loss', patience=2), ModelCheckpoint('movie_weights.h5', save_best_only=True)]
-model.fit([Users.reshape((-1,1)), Movies.reshape((-1,1))], Ratings.reshape((-1,1)), batch_size=1000, nb_epoch=50, validation_split=.1, callbacks=callbacks, verbose=2)
+model.fit([Users.reshape((-1,1)), Movies.reshape((-1,1))], Ratings.reshape((-1,1)), batch_size=100, nb_epoch=20, validation_split=.1, callbacks=callbacks, verbose=2)
 
 scores = model.evaluate(X_test, Y_test, verbose=0)
 print("Accuracy: %.2f%%" % (scores[1]*100))
